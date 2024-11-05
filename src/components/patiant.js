@@ -1,4 +1,3 @@
-// src/pages/PatientDashboard.js
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../config/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -62,7 +61,7 @@ const PatientDashboard = () => {
     const patientDocRef = doc(db, 'patients', userId);
     await setDoc(patientDocRef, { name, contactDetails, medicalHistory }, { merge: true });
     alert("Patient details saved successfully.");
-    setIsEditing(false); // Exit editing mode after saving
+    setIsEditing(false);
   };
 
   const handleBookAppointment = async (e) => {
@@ -71,19 +70,13 @@ const PatientDashboard = () => {
       alert("Please select a doctor and choose a date/time.");
       return;
     }
-  
-    // Log the dateTime to ensure it's formatted correctly
-    console.log("Booking appointment for date/time: ", dateTime);
-  
+
     try {
-      // Create a new Date object and log it
       const appointmentDateTime = new Date(dateTime);
-      console.log("Parsed appointment date/time: ", appointmentDateTime);
-  
       if (isNaN(appointmentDateTime.getTime())) {
         throw new Error("Invalid date/time format. Please ensure it is correctly selected.");
       }
-  
+
       const appointmentRef = collection(db, 'appointments');
       await addDoc(appointmentRef, {
         doctorId: selectedDoctorId,
@@ -98,8 +91,6 @@ const PatientDashboard = () => {
       alert("Error booking appointment: " + error.message);
     }
   };
-  
-  
 
   const clearAppointmentForm = () => {
     setSelectedDoctorId('');
@@ -127,7 +118,7 @@ const PatientDashboard = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
               />
             </label>
             <label className="block mb-2">
@@ -136,7 +127,7 @@ const PatientDashboard = () => {
                 type="text"
                 value={contactDetails}
                 onChange={(e) => setContactDetails(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
               />
             </label>
             <label className="block mb-2">
@@ -144,19 +135,13 @@ const PatientDashboard = () => {
               <textarea
                 value={medicalHistory}
                 onChange={(e) => setMedicalHistory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md"
               />
             </label>
-            <button
-              onClick={handleSaveDetails}
-              className="w-full py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
-            >
+            <button onClick={handleSaveDetails} className="w-full py-2 font-semibold text-white bg-blue-500 rounded-md">
               Save Details
             </button>
-            <button
-              onClick={() => setIsEditing(false)}
-              className="w-full py-2 mt-2 font-semibold text-white bg-gray-500 rounded-md hover:bg-gray-600 transition duration-200"
-            >
+            <button onClick={() => setIsEditing(false)} className="w-full py-2 mt-2 font-semibold text-white bg-gray-500 rounded-md">
               Cancel
             </button>
           </>
@@ -165,10 +150,7 @@ const PatientDashboard = () => {
             <p><strong>Name:</strong> {name}</p>
             <p><strong>Contact Details:</strong> {contactDetails}</p>
             <p><strong>Medical History:</strong> {medicalHistory}</p>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="mt-4 py-2 px-4 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
-            >
+            <button onClick={() => setIsEditing(true)} className="mt-4 py-2 px-4 font-semibold text-white bg-blue-500 rounded-md">
               Edit Details
             </button>
           </>
@@ -176,10 +158,7 @@ const PatientDashboard = () => {
       </div>
 
       {/* Button to toggle appointment form */}
-      <button
-        onClick={() => setShowAppointment(!showAppointment)}
-        className="mb-4 py-2 px-4 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
-      >
+      <button onClick={() => setShowAppointment(!showAppointment)} className="mb-4 py-2 px-4 font-semibold text-white bg-blue-500 rounded-md">
         {showAppointment ? "Hide Appointment Form" : "Book an Appointment"}
       </button>
 
@@ -194,7 +173,7 @@ const PatientDashboard = () => {
                 value={selectedDoctorId}
                 onChange={(e) => setSelectedDoctorId(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
               >
                 <option value="">Select a doctor</option>
                 {doctors.map(doctor => (
@@ -211,7 +190,7 @@ const PatientDashboard = () => {
                 value={dateTime}
                 onChange={(e) => setDateTime(e.target.value)}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
               />
             </label>
             <label className="block mb-2">
@@ -219,23 +198,17 @@ const PatientDashboard = () => {
               <textarea
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
               />
             </label>
-            <button
-              type="submit"
-              className="w-full py-2 font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 transition duration-200"
-            >
+            <button type="submit" className="w-full py-2 font-semibold text-white bg-blue-500 rounded-md">
               Book Appointment
             </button>
           </form>
         </div>
       )}
 
-      {/* <button
-        onClick={handleLogout}
-        className="mt-4 py-2 px-4 font-semibold text-white bg-red-500 rounded-md hover:bg-red-600 transition duration-200"
-      >
+      {/* <button onClick={handleLogout} className="mt-4 py-2 px-4 font-semibold text-white bg-red-500 rounded-md">
         Logout
       </button> */}
     </div>
