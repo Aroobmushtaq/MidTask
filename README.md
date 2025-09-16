@@ -7,4 +7,4 @@ A  web application that connects doctors and patients with appointment booking a
 - Firebase – Authentication, Firestore database, and hosting
 - 
 # Live Demo
-[https://stirring-bonbon-5a686c.netlify.app/]
+https://stirring-bonbon-5a686c.netlify.app/
